@@ -39,4 +39,12 @@ Inicio
             mejor_ruta = ruta
             
     Retornar mejor_ruta, distancia_minima
-Fin
+Fin}
+
+### Instrucciones de ejecución
+
+Para probar el algoritmo en tu máquina:
+1. Asegúrate de tener instalado Python 3.x.
+2. Descarga el archivo `vendedor_viajero.py`.
+3. Ejecuta el script desde la terminal con el comando:
+   `python vendedor_viajero.py`
