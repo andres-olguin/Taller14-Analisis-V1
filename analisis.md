@@ -29,6 +29,6 @@ Fin
 
 ### Representación Matemática del Costo
 
-$$C = \sum_{i=1}^{n-1} d(v_i, v_{i+1}) + d(v_n, v_1)$$
+$$C=\sum_{i=1}^{n-1}d(v_i,v_{i+1})+d(v_n,v_1)$$
 
 Donde d(v_i, v_{i+1}) representa la distancia entre dos ciudades consecutivas en la ruta propuesta.
