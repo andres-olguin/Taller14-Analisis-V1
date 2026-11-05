@@ -1,59 +1,51 @@
-# Taller 14 - El Vendedor Viajero
-**Integrantes:** Andrés Olguín, Maximiliano Valdés, Enrique Chamy.
+# TSP Brute Force Lab — Vendedor viajero por búsqueda exhaustiva
 
-### 1. ¿En qué consiste el problema?
-Consiste en encontrar la ruta más corta para un vendedor que debe visitar varias ciudades y volver al punto de partida. 
-* **Entradas:** Una lista de ciudades y las distancias entre cada una de ellas.
-* **Salidas:** La ruta o recorrido más corto posible.
-* **Restricciones:** Solo se puede pasar una vez por cada ciudad y se debe terminar en la ciudad donde se empezó.
+Laboratorio académico de algoritmos para resolver el **problema del vendedor viajero (TSP)** en instancias pequeñas mediante enumeración de recorridos. Contiene un ejercicio Python original, una implementación de referencia más controlada, pruebas y una demostración web.
 
-### 2. Problema de decisión asociado
-¿Existe una ruta que pase por todas las ciudades y vuelva al inicio cuya distancia total sea menor o igual a un número límite "X"?
+**Autores del trabajo académico:** Andrés Olguín, Maximiliano Valdés y Enrique Chamy.
 
-### 3. Clase de problema
-Pertenece a la clase de problemas NP-Completo.
+> **Estado:** algoritmo exacto didáctico con complejidad factorial. No es un optimizador logístico para ciudades o rutas a gran escala.
 
-### 4. Aplicaciones
-* Reparto de paquetes o logística.
-* Rutas de los furgones escolares.
-* Perforación automática de placas de circuitos.
+## Problema
 
-### 5. Pseudocódigo del Algoritmo (Fuerza Bruta)
+Dadas las distancias entre ciudades, encontrar el circuito de costo mínimo que visite cada una exactamente una vez y regrese al origen. El problema de decisión asociado es NP-completo; la versión de optimización se considera NP-difícil.
 
-```text
-Inicio
-    Definir distancia_minima = Infinito
-    Definir mejor_ruta = Vacío
-    Generar todas las permutaciones posibles de las ciudades
-    
-    Para cada ruta en las permutaciones:
-        Calcular distancia_actual = 0
-        
-        Para i desde 1 hasta cantidad de ciudades - 1:
-            distancia_actual = distancia_actual + distancia entre ruta[i] y ruta[i+1]
-            
-        distancia_actual = distancia_actual + distancia entre ruta[ultima_ciudad] y ruta[primera_ciudad]
-        
-        Si distancia_actual < distancia_minima:
-            distancia_minima = distancia_actual
-            mejor_ruta = ruta
-            
-    Retornar mejor_ruta, distancia_minima
-Fin}
+## Ejecutar
 
-### Instrucciones de ejecución
+**Requisitos:** Python 3.10+ para la referencia independiente.
 
-Para probar el algoritmo en tu máquina:
-1. Asegúrate de tener instalado Python 3.x.
-2. Descarga el archivo `vendedor_viajero.py`.
-3. Ejecuta el script desde la terminal con el comando:
-   `python vendedor_viajero.py`
+```bash
+python vendedor_viajero.py
+python -m src.tsp_reference
+python -m unittest discover -s tests -v
+```
 
+Ambos scripts muestran un ejemplo pequeño. La referencia fija la ciudad inicial en 0, valida una matriz numérica no negativa y limita a 10 ciudades para evitar ejecuciones accidentales excesivamente costosas.
 
-## Demostración web (frontend propio)
+## Archivos principales
 
-Se incorporó una [interfaz experimental en docs/index.html](docs/index.html) que puede utilizarse como fuente de GitHub Pages. **No se ha confirmado aún la activación ni la URL pública de GitHub Pages.**
+| Ruta | Uso |
+|---|---|
+| [`vendedor_viajero.py`](vendedor_viajero.py) | Implementación original con `itertools.permutations` |
+| [`src/tsp_reference.py`](src/tsp_reference.py) | Solver de referencia que itera permutaciones incrementalmente |
+| [`tests/`](tests/) | Tests de ruta, costo conocido y entradas inválidas |
+| [`docs/index.html`](docs/index.html) | Demostración visual educativa independiente |
+| [`.github/workflows/tsp-tests.yml`](.github/workflows/tsp-tests.yml) | Tests automáticos |
 
-Para publicarla, configurar GitHub Pages con rama main y carpeta /docs, verificar el sitio y agregar su URL comprobada a la sección About del repositorio. La interfaz es una adaptación o visualización didáctica; consultar sus límites en la propia página.
+## Comparación de métodos
 
-[Estudio de evolución y requisitos de seguridad](docs/ESTUDIO_DE_EVOLUCION_2026-10-30.md).
+| Variante | Característica | Límite |
+|---|---|---|
+| Código histórico | Materializa todas las permutaciones en memoria | Consumo factorial de memoria |
+| Referencia nueva | Itera las permutaciones y fija ciudad de salida | Tiempo factorial, tamaño limitado |
+| [Backtracking con poda](https://github.com/andres-olguin/tsp-backtracking-lab) | Descarta algunas ramas por costo | Peor caso sigue siendo factorial |
+
+La solución exacta crece demasiado rápido con `n` para usos a gran escala. Para problemas reales se deben evaluar restricciones, heurísticas, optimización matemática y criterios de calidad distintos de la optimalidad garantizada.
+
+## Evidencia, complejidad y evolución
+
+Las pruebas automáticas validan casos acotados; no hay benchmark de producción ni datos de tráfico real. Próximos pasos: comparar tiempos y memoria por número de ciudades, repetir resultados con matrices de referencia y documentar qué podas ayudan.
+
+[Estudio TSP](docs/ESTUDIO_DE_EVOLUCION_2026-10-30.md) · [Seguridad y escalabilidad](docs/ARCHITECTURE_SCALABILITY_2026-11-04.md).
+
+**Titularidad:** trabajo académico con coautoría; respetar permisos y créditos antes de reutilizar sus materiales comercialmente.
